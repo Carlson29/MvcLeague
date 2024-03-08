@@ -12,8 +12,8 @@ namespace MvcLeague.Models
                 serviceProvider.GetRequiredService<
                     DbContextOptions<MvcLeagueContext>>()))
             {
-                // Look for any movies.
-                if (context.Player.Any())
+                // Look for any players or teams.
+                if (context.Player.Any() && context.Team.Any())
                 {
                     return;   // DB has been seeded
                 }
@@ -26,9 +26,32 @@ namespace MvcLeague.Models
                         nationality="Swedish",
                         dateOfBirth= DateTime.Parse("1984-3-13"),
 
-                    }
+                    },
+                     new Player
+                     {
+
+                         teamId = 1,
+                         playerName = "Pogba",
+                         nationality = "French",
+                         dateOfBirth = DateTime.Parse("1960-3-08"),
+
+                     }
 
                 );
+
+                context.Team.AddRange(
+    new Team
+    {
+       
+        league = "Laliga",
+        throphies = 50,
+        marketValue = 8.99M,
+        teamName = "Barcelona",
+
+    }
+
+);
+            
                 context.SaveChanges();
             }
         }

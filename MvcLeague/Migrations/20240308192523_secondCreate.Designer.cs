@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MvcLeague.Data;
 
@@ -11,9 +12,11 @@ using MvcLeague.Data;
 namespace MvcLeague.Migrations
 {
     [DbContext(typeof(MvcLeagueContext))]
-    partial class MvcLeagueContextModelSnapshot : ModelSnapshot
+    [Migration("20240308192523_secondCreate")]
+    partial class secondCreate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
