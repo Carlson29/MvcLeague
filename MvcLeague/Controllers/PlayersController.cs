@@ -20,12 +20,32 @@ namespace MvcLeague.Controllers
         }
 
         // GET: Players
-        public async Task<IActionResult> Index()
+        /*  public async Task<IActionResult> Index()
+          {
+              return _context.Player != null ?
+                          View(await _context.Player.ToListAsync()) :
+                          Problem("Entity set 'MvcLeagueContext.Player'  is null.");
+          }*/
+
+
+        public async Task<IActionResult> Index(string searchString)
         {
-            return _context.Player != null ?
-                        View(await _context.Player.ToListAsync()) :
-                        Problem("Entity set 'MvcLeagueContext.Player'  is null.");
+            if (_context.Player == null)
+            {
+                return Problem("Entity set 'MvcMovieContext.Movie'  is null.");
+            }
+
+            var movies = from m in _context.Player
+                         select m;
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                movies = movies.Where(s => s.playerName!.Contains(searchString));
+            }
+
+            return View(await movies.ToListAsync());
         }
+
 
         // GET: Players/Details/5
         public async Task<IActionResult> Details(int? id)
