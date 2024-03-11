@@ -13,15 +13,15 @@ namespace MvcLeague.Models
                     DbContextOptions<MvcLeagueContext>>()))
             {
                 // Look for any players or teams.
-                if (context.Player.Any() && context.Team.Any())
+               /* if (context.Player.Any() && context.Team.Any())
                 {
                     return;   // DB has been seeded
-                }
-                context.Player.AddRange(
+                }*/
+               context.Player.AddRange(
                     new Player
                     {
 
-                        teamId = 1,
+                        teamId = 3,
                         playerName="Ibra",
                         nationality="Swedish",
                         dateOfBirth= DateTime.Parse("1984-3-13"),
@@ -30,7 +30,7 @@ namespace MvcLeague.Models
                      new Player
                      {
 
-                         teamId = 1,
+                         teamId = 3,
                          playerName = "Pogba",
                          nationality = "French",
                          dateOfBirth = DateTime.Parse("1960-3-08"),
@@ -39,7 +39,7 @@ namespace MvcLeague.Models
 
                 );
 
-                context.Team.AddRange(
+               context.Team.AddRange(
     new Team
     {
        

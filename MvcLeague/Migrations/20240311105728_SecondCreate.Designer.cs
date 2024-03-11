@@ -12,8 +12,8 @@ using MvcLeague.Data;
 namespace MvcLeague.Migrations
 {
     [DbContext(typeof(MvcLeagueContext))]
-    [Migration("20240308192523_secondCreate")]
-    partial class secondCreate
+    [Migration("20240311105728_SecondCreate")]
+    partial class SecondCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

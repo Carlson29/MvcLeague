@@ -28,7 +28,7 @@ namespace MvcLeague.Controllers
           }*/
 
 
-        public async Task<IActionResult> Index(string searchString)
+       /* public async Task<IActionResult> Index(string searchString)
         {
             if (_context.Player == null)
             {
@@ -44,6 +44,39 @@ namespace MvcLeague.Controllers
             }
 
             return View(await movies.ToListAsync());
+        }*/
+
+        public async Task<IActionResult> Index(int? teamPlayer, string searchString)
+        {
+            if (_context.Player == null)
+            {
+                return Problem("Entity set 'MvcMovieContext.Movie'  is null.");
+            }
+
+            // Use LINQ to get list of genres.
+            IQueryable<Team> genreQuery = from m in _context.Team
+                                            select m;
+            var players = from m in _context.Player
+                         select m;
+
+            if (!string.IsNullOrEmpty(searchString))
+            {
+                players = players.Where(s => s.playerName!.Contains(searchString));
+            }
+
+            if (teamPlayer > 0)
+            {
+                players = players.Where(x => x.teamId == teamPlayer);
+            }
+
+            var teamplayer = new TeamPlayer
+            {
+                teamPlayer = teamPlayer,
+                teams = await genreQuery.Distinct().ToListAsync(),
+                players = await players.ToListAsync()
+            };
+
+            return View(teamplayer);
         }
 
 

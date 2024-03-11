@@ -17,5 +17,20 @@ namespace MvcLeague.Models
         [Column(TypeName = "decimal(18, 2)")]
         public decimal marketValue { get; set; }
 
+        public override bool Equals(object? obj)
+        {
+            return obj is Team team &&
+                   teamId == team.teamId;
+        }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(teamId);
+        }
+
+        public override string? ToString()
+        {
+            return teamName;
+        }
     }
 }

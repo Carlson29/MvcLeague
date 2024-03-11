@@ -1,5 +1,4 @@
-﻿@model IEnumerable<MvcLeague.Models.Player>
-
+﻿@model MvcLeague.Models.TeamPlayer
 @{
     ViewData["Title"] = "Index";
 }
@@ -12,6 +11,14 @@
 
 <form asp-controller="Players" asp-action="Index">
     <p>
+        <select asp-for="teamPlayer" >
+            <option value="">All</option>
+            @foreach (var item in Model.teams!)
+        {
+                        <option value="@item.teamId">@item.teamName</option>
+        }
+        </select>
+
         Title: <input type="text" name="SearchString" />
         <input type="submit" value="Filter" />
     </p>
@@ -21,22 +28,23 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.teamId)
+                @Html.DisplayNameFor(model => model.players![0].teamId)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.playerName)
+                @Html.DisplayNameFor(model => model.players![0].playerName)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.nationality)
+                @Html.DisplayNameFor(model => model.players![0].nationality)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.dateOfBirth)
+                @Html.DisplayNameFor(model => model.players![0].dateOfBirth)
             </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
+        @foreach (var item in Model.players!)
+        {
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.teamId)
