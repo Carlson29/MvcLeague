@@ -17,5 +17,7 @@ namespace MvcLeague.Data
         public DbSet<MvcLeague.Models.Player> Player { get; set; } = default!;
 
         public DbSet<MvcLeague.Models.Team> Team { get; set; } = default!;
+
+        public DbSet<MvcLeague.Models.User> User { get; set; } = default!;
     }
 }
