@@ -44,18 +44,6 @@ namespace MvcLeague.Controllers
 
             return View(user);
         }
-        public async Task<IActionResult> Login(string userName, string password)
-        {
-          
-            var user = await _context.User
-                .FirstOrDefaultAsync(m => m.userName == userName && m.password == password);
-            if (user == null)
-            {
-                return NotFound();
-            }
-
-            return View(User);
-        }
 
         // GET: Users/Create
         public IActionResult Create()
@@ -68,13 +56,13 @@ namespace MvcLeague.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("userId,userName,password")] User user)
+        public async Task<IActionResult> Create([Bind("userId,userName,password,dateOfBirth")] User user)
         {
             if (ModelState.IsValid)
             {
                 _context.Add(user);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Details));
+                return RedirectToAction(nameof(Index));
             }
             return View(user);
         }
@@ -100,7 +88,7 @@ namespace MvcLeague.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("userId,userName,password")] User user)
+        public async Task<IActionResult> Edit(int id, [Bind("userId,userName,password,dateOfBirth")] User user)
         {
             if (id != user.userId)
             {

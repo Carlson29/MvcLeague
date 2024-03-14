@@ -21,7 +21,7 @@ namespace MvcLeague.Models
                     new Player
                     {
 
-                        teamId = 3,
+                        teamId =1 ,
                         playerName="Ibra",
                         nationality="Swedish",
                         dateOfBirth= DateTime.Parse("1984-3-13"),
@@ -39,18 +39,7 @@ namespace MvcLeague.Models
 
                 );
 
-               context.Team.AddRange(
-    new Team
-    {
-       
-        league = "Laliga",
-        throphies = 50,
-        marketValue = 8.99M,
-        teamName = "Barcelona",
 
-    }
-
-);
             
                 context.SaveChanges();
             }
