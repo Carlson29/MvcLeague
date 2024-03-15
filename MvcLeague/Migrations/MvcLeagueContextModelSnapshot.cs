@@ -88,6 +88,9 @@ namespace MvcLeague.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("userId"));
 
+                    b.Property<DateTime>("dateOfBirth")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("password")
                         .IsRequired()
                         .HasMaxLength(60)

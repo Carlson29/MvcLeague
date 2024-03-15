@@ -12,8 +12,8 @@ using MvcLeague.Data;
 namespace MvcLeague.Migrations
 {
     [DbContext(typeof(MvcLeagueContext))]
-    [Migration("20240313232305_usersCreate")]
-    partial class usersCreate
+    [Migration("20240314151551_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -90,6 +90,9 @@ namespace MvcLeague.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("userId"));
+
+                    b.Property<DateTime>("dateOfBirth")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("password")
                         .IsRequired()

@@ -1,12 +1,15 @@
 ﻿@model MvcLeague.Models.TeamPlayer
 @{
     ViewData["Title"] = "Index";
+    ViewData["Login"] = "true";
 }
 
 <h1>Index</h1>
 
 <p>
+      <button class="createButton">
     <a asp-action="Create">Create New</a>
+      </button>
 </p>
 
 <form asp-controller="Players" asp-action="Index">
@@ -59,9 +62,15 @@
                 @Html.DisplayFor(modelItem => item.dateOfBirth)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.id">Details</a> |
+                <button class="editButton">
+                <a asp-action="Edit" asp-route-id="@item.id">Edit</a>
+                    </button>
+                             <button class="detailsButton">
+                <a asp-action="Details" asp-route-id="@item.id">Details</a> 
+                    </button>
+                                <button class="deleteButton">
                 <a asp-action="Delete" asp-route-id="@item.id">Delete</a>
+                    </button>
             </td>
         </tr>
 }

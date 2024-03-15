@@ -12,6 +12,7 @@ namespace MvcLeague.Controllers
 {
     public class UsersController : Controller
     {
+        public static User loggedInUser=null;
         private readonly MvcLeagueContext _context;
 
         public UsersController(MvcLeagueContext context)
@@ -43,6 +44,24 @@ namespace MvcLeague.Controllers
             }
 
             return View(user);
+        }
+        public async Task<IActionResult> doLogin(string userName, string password)
+        {
+        
+
+            var user = await _context.User
+                .FirstOrDefaultAsync(m => m.userName == userName &&  m.password == password);
+            if (user == null)
+            {
+                return RedirectToAction(nameof(Login));
+            }
+            loggedInUser = user;
+            return RedirectToAction("Index", "Players");
+        }
+        public IActionResult Login()
+        {
+            ViewData["Login"] = "false";
+            return View();
         }
 
         // GET: Users/Create

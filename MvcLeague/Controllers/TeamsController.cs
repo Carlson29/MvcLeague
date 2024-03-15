@@ -20,17 +20,41 @@ namespace MvcLeague.Controllers
         }
 
         // GET: Teams
-        public async Task<IActionResult> Index()
+       /* public async Task<IActionResult> Index()
         {
               return _context.Team != null ? 
                           View(await _context.Team.ToListAsync()) :
                           Problem("Entity set 'MvcLeagueContext.Team'  is null.");
+        }*/
+         public async Task<IActionResult> Index(string searchString)
+          {
+            if (UsersController.loggedInUser != null)
+            {
+                if (_context.Team == null)
+              {
+                  return Problem("Entity set ''MvcLeagueContext.Team'  is null.");
+              }
+
+              var movies = from m in _context.Team
+                           select m;
+
+              if (!String.IsNullOrEmpty(searchString))
+              {
+                  movies = movies.Where(s => s.teamName!.Contains(searchString));
+              }
+
+              return View(await movies.ToListAsync());
+            }
+           
+            return RedirectToAction("Login", "Users");
         }
 
         // GET: Teams/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null || _context.Team == null)
+            if (UsersController.loggedInUser != null)
+            {
+                if (id == null || _context.Team == null)
             {
                 return NotFound();
             }
@@ -44,11 +68,17 @@ namespace MvcLeague.Controllers
 
             return View(team);
         }
+            return RedirectToAction("Login", "Users");
+    }
 
         // GET: Teams/Create
         public IActionResult Create()
         {
-            return View();
+            if (UsersController.loggedInUser != null)
+            {
+                return View();
+            }
+            return RedirectToAction("Login", "Users");
         }
 
         // POST: Teams/Create
@@ -58,7 +88,9 @@ namespace MvcLeague.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("teamId,league,throphies,marketValue,teamName")] Team team)
         {
-            if (ModelState.IsValid)
+            if (UsersController.loggedInUser != null)
+            {
+                if (ModelState.IsValid)
             {
                 _context.Add(team);
                 await _context.SaveChangesAsync();
@@ -66,11 +98,15 @@ namespace MvcLeague.Controllers
             }
             return View(team);
         }
+            return RedirectToAction("Login", "Users");
+    }
 
         // GET: Teams/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null || _context.Team == null)
+            if (UsersController.loggedInUser != null)
+            {
+                if (id == null || _context.Team == null)
             {
                 return NotFound();
             }
@@ -81,6 +117,8 @@ namespace MvcLeague.Controllers
                 return NotFound();
             }
             return View(team);
+            }
+            return RedirectToAction("Login", "Users");
         }
 
         // POST: Teams/Edit/5
@@ -90,7 +128,9 @@ namespace MvcLeague.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("teamId,league,throphies,marketValue,teamName")] Team team)
         {
-            if (id != team.teamId)
+            if (UsersController.loggedInUser != null)
+            {
+                if (id != team.teamId)
             {
                 return NotFound();
             }
@@ -117,11 +157,15 @@ namespace MvcLeague.Controllers
             }
             return View(team);
         }
+            return RedirectToAction("Login", "Users");
+    }
 
         // GET: Teams/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null || _context.Team == null)
+            if (UsersController.loggedInUser != null)
+            {
+                if (id == null || _context.Team == null)
             {
                 return NotFound();
             }
@@ -135,13 +179,17 @@ namespace MvcLeague.Controllers
 
             return View(team);
         }
+            return RedirectToAction("Login", "Users");
+    }
 
         // POST: Teams/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            if (_context.Team == null)
+            if (UsersController.loggedInUser != null)
+            {
+                if (_context.Team == null)
             {
                 return Problem("Entity set 'MvcLeagueContext.Team'  is null.");
             }
@@ -154,10 +202,16 @@ namespace MvcLeague.Controllers
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
+        return RedirectToAction("Login", "Users");
+    }
 
         private bool TeamExists(int id)
         {
-          return (_context.Team?.Any(e => e.teamId == id)).GetValueOrDefault();
+            if (UsersController.loggedInUser != null)
+            {
+                return (_context.Team?.Any(e => e.teamId == id)).GetValueOrDefault();
+            }
+            return false;
         }
     }
 }

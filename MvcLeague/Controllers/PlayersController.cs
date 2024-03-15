@@ -48,42 +48,48 @@ namespace MvcLeague.Controllers
 
         public async Task<IActionResult> Index(int? teamPlayer, string searchString)
         {
-            if (_context.Player == null)
+            if (UsersController.loggedInUser!=null)
             {
-                return Problem("Entity set 'MvcMovieContext.Movie'  is null.");
+                if (_context.Player == null)
+                {
+                    return Problem("Entity set 'MvcMovieContext.Movie'  is null.");
+                }
+
+                // Use LINQ to get list of genres.
+                IQueryable<Team> genreQuery = from m in _context.Team
+                                              select m;
+                var players = from m in _context.Player
+                              select m;
+
+                if (!string.IsNullOrEmpty(searchString))
+                {
+                    players = players.Where(s => s.playerName!.Contains(searchString));
+                }
+
+                if (teamPlayer > 0)
+                {
+                    players = players.Where(x => x.teamId == teamPlayer);
+                }
+
+                var teamplayer = new TeamPlayer
+                {
+                    teamPlayer = teamPlayer,
+                    teams = await genreQuery.Distinct().ToListAsync(),
+                    players = await players.ToListAsync()
+                };
+
+                return View(teamplayer);
             }
-
-            // Use LINQ to get list of genres.
-            IQueryable<Team> genreQuery = from m in _context.Team
-                                            select m;
-            var players = from m in _context.Player
-                         select m;
-
-            if (!string.IsNullOrEmpty(searchString))
-            {
-                players = players.Where(s => s.playerName!.Contains(searchString));
-            }
-
-            if (teamPlayer > 0)
-            {
-                players = players.Where(x => x.teamId == teamPlayer);
-            }
-
-            var teamplayer = new TeamPlayer
-            {
-                teamPlayer = teamPlayer,
-                teams = await genreQuery.Distinct().ToListAsync(),
-                players = await players.ToListAsync()
-            };
-
-            return View(teamplayer);
+            return RedirectToAction("Login", "Users");
         }
 
 
         // GET: Players/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null || _context.Player == null)
+            if (UsersController.loggedInUser != null)
+            {
+                if (id == null || _context.Player == null)
             {
                 return NotFound();
             }
@@ -96,12 +102,18 @@ namespace MvcLeague.Controllers
             }
 
             return View(player);
+            }
+            return RedirectToAction("Login", "Users");
         }
 
         // GET: Players/Create
         public IActionResult Create()
         {
-            return View();
+            if (UsersController.loggedInUser != null)
+            {
+                return View();
+        }
+            return RedirectToAction("Login", "Users");
         }
 
         // POST: Players/Create
@@ -111,19 +123,25 @@ namespace MvcLeague.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("id,teamId,playerName,nationality,dateOfBirth")] Player player)
         {
-            if (ModelState.IsValid)
+            if (UsersController.loggedInUser != null)
+            {
+                if (ModelState.IsValid)
             {
                 _context.Add(player);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
             return View(player);
+            }
+            return RedirectToAction("Login", "Users");
         }
 
         // GET: Players/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null || _context.Player == null)
+            if (UsersController.loggedInUser != null)
+            {
+                if (id == null || _context.Player == null)
             {
                 return NotFound();
             }
@@ -135,6 +153,8 @@ namespace MvcLeague.Controllers
             }
             return View(player);
         }
+            return RedirectToAction("Login", "Users");
+        }
 
         // POST: Players/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
@@ -143,7 +163,9 @@ namespace MvcLeague.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("id,teamId,playerName,nationality,dateOfBirth")] Player player)
         {
-            if (id != player.id)
+            if (UsersController.loggedInUser != null)
+            {
+                if (id != player.id)
             {
                 return NotFound();
             }
@@ -169,12 +191,16 @@ namespace MvcLeague.Controllers
                 return RedirectToAction(nameof(Index));
             }
             return View(player);
+            }
+            return RedirectToAction("Login", "Users");
         }
 
         // GET: Players/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null || _context.Player == null)
+            if (UsersController.loggedInUser != null)
+            {
+                if (id == null || _context.Player == null)
             {
                 return NotFound();
             }
@@ -188,13 +214,17 @@ namespace MvcLeague.Controllers
 
             return View(player);
         }
+            return RedirectToAction("Login", "Users");
+        }
 
         // POST: Players/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            if (_context.Player == null)
+            if (UsersController.loggedInUser != null)
+            {
+                if (_context.Player == null)
             {
                 return Problem("Entity set 'MvcLeagueContext.Player'  is null.");
             }
@@ -206,11 +236,17 @@ namespace MvcLeague.Controllers
 
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
+            }
+            return RedirectToAction("Login", "Users");
         }
 
         private bool PlayerExists(int id)
         {
-            return (_context.Player?.Any(e => e.id == id)).GetValueOrDefault();
+            if (UsersController.loggedInUser != null)
+            {
+                return (_context.Player?.Any(e => e.id == id)).GetValueOrDefault();
         }
+            return false;
+    }
     }
 }

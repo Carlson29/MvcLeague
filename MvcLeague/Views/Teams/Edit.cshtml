@@ -2,6 +2,7 @@
 
 @{
     ViewData["Title"] = "Edit";
+    ViewData["Login"] = "true";
 }
 
 <h1>Edit</h1>
@@ -41,7 +42,9 @@
 </div>
 
 <div>
+    <button class="backToListButton">
     <a asp-action="Index">Back to List</a>
+    </button>
 </div>
 
 @section Scripts {

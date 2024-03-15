@@ -18,5 +18,33 @@ html {
 }
 
 body {
-  margin-bottom: 60px;
+    margin-bottom: 60px;
+    background-color:whitesmoke;
+}
+header {
+    background-color: dodgerblue;
+}
+input {
+    border-radius: 5vw;
+}
+.deleteButton {
+    background-color: red;
+    border-radius:2vw;
+}
+.editButton {
+    background-color: black;
+    border-radius: 2vw;
+ 
+}
+.detailsButton {
+    background-color: dimgrey;
+    border-radius: 2vw;
+}
+.createButton {
+    background-color: dimgrey;
+    border-radius: 2vw;
+}
+.backToListButton {
+    background-color: dimgrey;
+    border-radius: 2vw;
 }

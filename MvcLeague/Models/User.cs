@@ -15,6 +15,9 @@ namespace MvcLeague.Models
             [StringLength(60, MinimumLength = 8)]
             [RegularExpression("^(?=.*[0-9])" + "(?=.*[a-z])(?=.*[A-Z])" + "(?=.*[@#$%^&+=*/])" + ".{8,20}$")]
             public string password { get; set; }
-        }
+           [Required]
+           [DataType(DataType.Date)]
+            public DateTime dateOfBirth { get; set; }
+    }
   }
 

@@ -2,6 +2,7 @@
 
 @{
     ViewData["Title"] = "Create";
+    ViewData["Login"] = "true";
 }
 
 <h1>Create</h1>
@@ -32,6 +33,7 @@
                 <input asp-for="dateOfBirth" class="form-control" />
                 <span asp-validation-for="dateOfBirth" class="text-danger"></span>
             </div>
+            <br />
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>

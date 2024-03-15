@@ -2,6 +2,7 @@
 
 @{
     ViewData["Title"] = "Delete";
+    ViewData["Login"] = "true";
 }
 
 <h1>Delete</h1>
@@ -39,7 +40,9 @@
     
     <form asp-action="Delete">
         <input type="hidden" asp-for="teamId" />
-        <input type="submit" value="Delete" class="btn btn-danger" /> |
+        <input type="submit" value="Delete" class="btn btn-danger" /> 
+        <button class="backToListButton">
         <a asp-action="Index">Back to List</a>
+        </button>
     </form>
 </div>

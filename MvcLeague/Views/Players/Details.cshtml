@@ -2,6 +2,7 @@
 
 @{
     ViewData["Title"] = "Details";
+    ViewData["Login"] = "true";
 }
 
 <h1>Details</h1>
@@ -37,6 +38,10 @@
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model?.id">Edit</a> |
+      <button class="editButton">
+    <a asp-action="Edit" asp-route-id="@Model?.id">Edit</a> 
+      </button>
+         <button class="backToListButton">
     <a asp-action="Index">Back to List</a>
+       </button>
 </div>
