@@ -48,3 +48,12 @@ input {
     background-color: dimgrey;
     border-radius: 2vw;
 }
+.banner {
+    background-color: green;
+    border-radius: 2vw;
+    height:200x;
+    width:150px;
+}
+#bannerdiv {
+    text-align: center;
+}

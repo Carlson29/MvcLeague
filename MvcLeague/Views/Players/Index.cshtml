@@ -31,13 +31,10 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.players![0].teamId)
+                @Html.DisplayNameFor(model => model.players![0].nationality)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.players![0].playerName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.players![0].nationality)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.players![0].dateOfBirth)
@@ -50,14 +47,12 @@
         {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.teamId)
+                    @Html.DisplayFor(modelItem => item.nationality)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.playerName)
             </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.nationality)
-            </td>
+   
             <td>
                 @Html.DisplayFor(modelItem => item.dateOfBirth)
             </td>

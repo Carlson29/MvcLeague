@@ -63,6 +63,13 @@ namespace MvcLeague.Controllers
             ViewData["Login"] = "false";
             return View();
         }
+        public IActionResult Logout()
+        {
+            ViewData["Login"] = "false";
+            loggedInUser = null;
+            return RedirectToAction(nameof(Login));
+        }
+    
 
         // GET: Users/Create
         public IActionResult Create()
@@ -79,9 +86,14 @@ namespace MvcLeague.Controllers
         {
             if (ModelState.IsValid)
             {
-                _context.Add(user);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                var VerifyUser = await _context.User
+               .FirstOrDefaultAsync(m => m.userName == user.userName);
+                if (VerifyUser== null) {
+                    _context.Add(user);
+                    await _context.SaveChangesAsync();
+                    loggedInUser = user;
+                    return RedirectToAction("Index", "Players");
+                }
             }
             return View(user);
         }

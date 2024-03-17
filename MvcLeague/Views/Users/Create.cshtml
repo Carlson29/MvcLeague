@@ -19,7 +19,7 @@
             </div>
             <div class="form-group">
                 <label asp-for="password" class="control-label"></label>
-                <input asp-for="password" class="form-control" />
+                <input asp-for="password" class="form-control" type="password" title="must contain 8 characters, atleast one upperCase letter, one number, one special" placeholder="must contain 8 characters, atleast one upperCase letter, one number, one special" />
                 <span asp-validation-for="password" class="text-danger"></span>
             </div>
             <div class="form-group">

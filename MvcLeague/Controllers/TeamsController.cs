@@ -35,15 +35,27 @@ namespace MvcLeague.Controllers
                   return Problem("Entity set ''MvcLeagueContext.Team'  is null.");
               }
 
-              var movies = from m in _context.Team
+              var teams = from m in _context.Team
                            select m;
 
               if (!String.IsNullOrEmpty(searchString))
               {
-                  movies = movies.Where(s => s.teamName!.Contains(searchString));
+                    teams = teams.Where(s => s.teamName!.Contains(searchString));
               }
+              List <TeamDTO> teamsDTO = new List<TeamDTO>();
+                foreach (var t in teams)
+                {
+                    TeamDTO teamDTO = new TeamDTO()
+                    {
+                        teamId = t.teamId,
+                        teamName = t.teamName,
+                        league = t.league,
+                        throphies = t.throphies,
+                    };
+                    teamsDTO.Add(teamDTO);
+                }
 
-              return View(await movies.ToListAsync());
+              return View(teamsDTO);
             }
            
             return RedirectToAction("Login", "Users");
@@ -64,9 +76,16 @@ namespace MvcLeague.Controllers
             if (team == null)
             {
                 return NotFound();
-            }
+                }
+                TeamDTO teamDTO = new TeamDTO()
+                {
+                    teamId = team.teamId,
+                    teamName = team.teamName,
+                    league = team.league,
+                    throphies = team.throphies,
+                };
 
-            return View(team);
+                return View(teamDTO);
         }
             return RedirectToAction("Login", "Users");
     }

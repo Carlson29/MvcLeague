@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -56,7 +57,7 @@ namespace MvcLeague.Controllers
                 }
 
                 // Use LINQ to get list of genres.
-                IQueryable<Team> genreQuery = from m in _context.Team
+                IQueryable<Team> teamQuery = from m in _context.Team
                                               select m;
                 var players = from m in _context.Player
                               select m;
@@ -69,14 +70,29 @@ namespace MvcLeague.Controllers
                 if (teamPlayer > 0)
                 {
                     players = players.Where(x => x.teamId == teamPlayer);
+                 
+                }
+               
+
+                List <PlayerDTO> results = new List<PlayerDTO>();
+                foreach (var p in players)
+                {
+                    PlayerDTO playerDto = new PlayerDTO()
+                    {
+                        id = p.id,
+                        nationality=p.nationality,
+                        playerName = p.playerName,
+                        dateOfBirth = p.dateOfBirth,
+                    };
+                    results.Add(playerDto);
                 }
 
                 var teamplayer = new TeamPlayer
                 {
                     teamPlayer = teamPlayer,
-                    teams = await genreQuery.Distinct().ToListAsync(),
-                    players = await players.ToListAsync()
-                };
+                    teams = await teamQuery.Distinct().ToListAsync(),
+                    players = results
+            };
 
                 return View(teamplayer);
             }
@@ -100,8 +116,15 @@ namespace MvcLeague.Controllers
             {
                 return NotFound();
             }
+                PlayerDTO playerDto = new PlayerDTO()
+                {
+                    id = player.id,
+                    nationality = player.nationality,
+                    playerName = player.playerName,
+                    dateOfBirth = player.dateOfBirth,
+                };
 
-            return View(player);
+                return View(playerDto);
             }
             return RedirectToAction("Login", "Users");
         }
@@ -151,7 +174,8 @@ namespace MvcLeague.Controllers
             {
                 return NotFound();
             }
-            return View(player);
+             
+                return View(player);
         }
             return RedirectToAction("Login", "Users");
         }

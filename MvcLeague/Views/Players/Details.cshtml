@@ -1,4 +1,4 @@
-﻿@model MvcLeague.Models.Player
+﻿@model MvcLeague.Models.PlayerDTO
 
 @{
     ViewData["Title"] = "Details";
@@ -11,12 +11,6 @@
     <h4>Player</h4>
     <hr />
     <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.teamId)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.teamId)
-        </dd>
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.playerName)
         </dt>
