@@ -37,6 +37,15 @@ new Team
     marketValue = 50.99M,
     teamName = "Manchester United",
 
+},
+new Team
+{
+
+    league = "Bundesliga",
+    throphies = 20,
+    marketValue = 20M,
+    teamName = "Bayern",
+
 }
 
 
@@ -59,12 +68,29 @@ new Team
                          nationality = "French",
                          dateOfBirth = DateTime.Parse("1960-3-08"),
 
-                     }
+                     },
+                      new Player
+                      {
+
+                        teamId = 1 ,
+                        playerName = "Eto'o",
+                        nationality = "Cameroonian",
+                        dateOfBirth = DateTime.Parse("1984-3-13"),
+
+                    }
 
                 );
+                context.User.AddRange(
+                    new User
+                    {
+                       userName="carly",
+                       password="12345Pk*",
+                        dateOfBirth = DateTime.Parse("1984-3-13"),
 
-    
-            
+                    }
+
+                      );
+
                 context.SaveChanges();
             }
         }

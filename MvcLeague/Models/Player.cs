@@ -16,5 +16,21 @@ namespace MvcLeague.Models
         public string nationality { get; set; }
         [DataType(DataType.Date)]
         public DateTime dateOfBirth { get; set; }
+
+        public override bool Equals(object? obj)
+        {
+            return obj is Player player &&
+                   id == player.id;
+        }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(id);
+        }
+
+        public override string? ToString()
+        {
+            return playerName;
+        }
     }
 }
