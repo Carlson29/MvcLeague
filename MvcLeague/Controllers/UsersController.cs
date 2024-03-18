@@ -21,7 +21,6 @@ namespace MvcLeague.Controllers
         }
      
 
-        // GET: Users/Details/5
        
         public async Task<IActionResult> doLogin(string userName, string password)
         {

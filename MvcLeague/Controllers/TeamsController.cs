@@ -19,13 +19,6 @@ namespace MvcLeague.Controllers
             _context = context;
         }
 
-        // GET: Teams
-       /* public async Task<IActionResult> Index()
-        {
-              return _context.Team != null ? 
-                          View(await _context.Team.ToListAsync()) :
-                          Problem("Entity set 'MvcLeagueContext.Team'  is null.");
-        }*/
          public async Task<IActionResult> Index(string searchString)
           {
             if (UsersController.loggedInUser != null)

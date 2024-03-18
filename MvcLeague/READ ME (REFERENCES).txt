@@ -1,0 +1,12 @@
+READ Me
+
+for login
+username:carly
+password:12345PK*
+
+References
+https://learn.microsoft.com/en-us/aspnet/core/tutorials/first-mvc-app/start-mvc?view=aspnetcore-8.0&tabs=visual-studio
+
+
+GitHub Link
+https://github.com/Carlson29/MvcLeague.git
